@@ -1,0 +1,22 @@
+.header-wrapper {
+    display: flex;
+    Justify-content: space-around;
+}
+
+.header-block {
+    display: inline-block;
+    text-align: center;
+}
+
+
+.disable {
+    display: none;
+}
+
+
+.registration-form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
