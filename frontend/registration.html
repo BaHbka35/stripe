@@ -13,14 +13,23 @@
     <main>
         <div class=registration-form-wrapper>
             <form class="registration-form">
-                <p>
-                  <label>Username: <input class="registration-form-username" type="text"/></label>
-                <p>
-                  <label>Password: <input class="registration-form-password" type="password"/></label>
-                </p>
-                <p>
-                  <button class='registration-button-submit' type="submit">submit</button>
-                </p>
+                <div class="registration-form-fields-wrapper">
+                    <div class="registration-form-fields-item">
+                        <label for="username">Username:</label>
+                        <input id="username" class="registration-form-username" type="text"/>
+                    </div>
+                    <div class="registration-form-fields-item">
+                        <label>Password: </label>
+                        <input class="registration-form-password" type="password"/>
+                    </div>
+                    <div class="registration-form-fields-item">
+                        <label>Repeat password: </label>
+                        <input class="registration-form-password-repeat" type="password"/>
+                    </div>
+                    <div class="registration-form-fields-item">
+                        <button class='registration-button-submit' type="submit">submit</button>
+                    </div>
+                </div>
             </form>
         </div>
     </main>

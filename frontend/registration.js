@@ -1,6 +1,7 @@
 const registrationFormNode = document.querySelector('.registration-form')
 const usernameNode = registrationFormNode.querySelector('.registration-form-username')
 const userPasswordNode = registrationFormNode.querySelector('.registration-form-password')
+const userPasswordRepeatNode = registrationFormNode.querySelector('.registration-form-password-repeat')
 
 
 async function handleRegistrationForm(event) {
@@ -8,11 +9,13 @@ async function handleRegistrationForm(event) {
 
     let username = usernameNode.value
     let password = userPasswordNode.value
+    let password2 = userPasswordRepeatNode.value
 
-    if (username & password) {
+    if (username & password & password2) {
         let userRegistrationDataForm = {
-            'username': usernameNode.value,
-            'password': userPasswordNode.value
+            'username': username,
+            'password': password,
+            'password2': password2
         }
         console.log(userRegistrationDataForm)
         await sendRegistrationFormToServer(userRegistrationDataForm)
@@ -20,6 +23,7 @@ async function handleRegistrationForm(event) {
     }
     usernameNode.value = ''
     userPasswordNode.value = ''
+    userPasswordRepeatNode.value = ''
 }
 
 
@@ -28,6 +32,10 @@ async function sendRegistrationFormToServer(userRegistrationDataForm) {
     try {
         const response = await fetch(url, {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(userRegistrationDataForm)
         })
         const responseJson = await response.json()

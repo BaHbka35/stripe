@@ -13,10 +13,21 @@
     display: none;
 }
 
-
 .registration-form-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+
+.registration-form-fields-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.registration-form-fields-item {
+    display: grid;
+    margin-bottom: 10px;
 }
