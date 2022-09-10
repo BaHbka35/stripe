@@ -4,9 +4,6 @@ import { addItemToOrder } from "../items.js"
 let itemsNode = document.querySelector('.items-list')
 
 
-
-
-
 itemsNode.addEventListener(
     'click', (event) => {
         if (event.target.tagName != 'BUTTON'){

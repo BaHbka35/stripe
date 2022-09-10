@@ -34,7 +34,6 @@
 
 .items-list  {
     margin-top: 100px;
-    display: grid;
     align-items: left;
 }
 
@@ -45,7 +44,7 @@
 }
 
 .items-list-elem {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .main-wrapper {

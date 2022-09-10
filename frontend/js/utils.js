@@ -8,6 +8,7 @@ let loginNode = document.querySelector('.header-login')
 let usernameNode = document.querySelector('.header-username')
 let logoutNode = document.querySelector('.header-logout')
 let itemsNode = document.querySelector('.items-list')
+let orderItemsNode = document.querySelector('.order-items')
 
 
 export async function render(){
@@ -22,12 +23,14 @@ export async function render(){
         const items = await getItems()
         await renderItems(items)
 
-        console.log(await getOrderItems())
+        const orderItems = await getOrderItems()
+        await renderOrderItems(orderItems)
 
     } else {
         usernameNode.classList.add('disable')
         logoutNode.classList.add('disable')
         itemsNode.innerHTML = ''
+        orderItemsNode.innerHTML = ''
         registrationNode.classList.remove('disable')
         loginNode.classList.remove('disable')
     }
@@ -51,6 +54,23 @@ export async function renderItems(items){
             </li>
         `
         itemsNode.innerHTML += listElem
+        
+    }
+}
+
+
+export async function renderOrderItems(orderItems){
+    for (const item of orderItems){
+        console.log(item)
+        const name = item.name
+        const price = item.price
+        const listElem = `
+            <li class="order-items-elem">
+                <p>name: ${name}</p>
+                <p>price: ${price}</p>
+            </li>
+        `
+        orderItemsNode.innerHTML += listElem
         
     }
 }
