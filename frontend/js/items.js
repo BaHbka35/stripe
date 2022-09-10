@@ -2,7 +2,6 @@ import { getItemsAPI, addItemToOrderAPI } from "./apis.js"
 import { getAuthHeaders, getJsonHeaders } from "./headers_utils.js"
 
 
-
 export async function getItems(){
     const headers = getAuthHeaders()
     try {
