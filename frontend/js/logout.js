@@ -1,4 +1,6 @@
 import { getToken, getSignature } from "./tokens_and_signatures.js";
+import { deleteUserFromLocalStoragee } from "./users.js"
+import { render } from "./utils.js"
 
 
 let logoutNode = document.querySelector('.header-logout')
@@ -26,7 +28,8 @@ async function sendLogoutReguest(){
             },
         })
         const responseJson = await response.json()
-        console.log(responseJson)
+        deleteUserFromLocalStoragee()
+        render()
     } catch (error) {
         console.log(error)
     } 
