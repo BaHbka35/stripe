@@ -32,15 +32,29 @@
     margin-bottom: 10px;
 }
 
-.items-list {
+.items-list  {
     margin-top: 100px;
-    display: grid;
     align-items: left;
 }
 
-.items-list-elem {
-    margin-bottom: 15px;
+.order-items {
+    margin-top: 100px;
+    display: grid;
+    align-items: center;
 }
 
+.items-list-elem {
+    margin-bottom: 30px;
+}
+
+.main-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.order-items-elem {
+    margin-bottom: 30px;
+}
 
 
