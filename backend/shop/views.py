@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import Item, OrdersItems, Order
 
-from .serializers import ItemSerializer, AddItemToOrderSerializer
+from .serializers import ItemSerializer, AddItemToOrderSerializer, OrderSerializer
 
 
 class ItemsListAPI(generics.ListAPIView):
@@ -39,7 +39,7 @@ class AddItemToOrderAPI(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class OrderItemsListAPI(APIView):
+class OrderAPI(APIView):
 
     permission_classes = [IsAuthenticated]
 
@@ -47,14 +47,17 @@ class OrderItemsListAPI(APIView):
         order: Order = Order.objects.get(id=order_id)
         if order.user.id != request.user.id:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
+        total_price = 0
         list_for_response: list[Item] = []
         orders_items: list[OrdersItems] = OrdersItems.objects.filter(order_id=order_id)
         for order_item in orders_items:
             item = Item.objects.get(id=order_item.item_id)
             list_for_response.append(item)
+            total_price += item.price
 
-        serializer = ItemSerializer(list_for_response, many=True)
+        data = {'total_price': total_price, 'items': list_for_response}
+
+        serializer = OrderSerializer(data)
         data = json.loads(json.dumps(serializer.data))
         return Response(data=data, status=status.HTTP_200_OK)
 
