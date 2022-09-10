@@ -13,7 +13,7 @@
     display: none;
 }
 
-.registration-form-wrapper {
+.registration-form-wrapper, .login-form-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,13 +21,13 @@
 }
 
 
-.registration-form-fields-wrapper {
+.registration-form-fields-wrapper, .login-form-fields-wrapper {
     display: flex;
     flex-direction: column;
 }
 
 
-.registration-form-fields-item {
+.registration-form-fields-item, .login-form-fields-item{
     display: grid;
     margin-bottom: 10px;
 }

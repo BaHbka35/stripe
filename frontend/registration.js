@@ -11,7 +11,7 @@ async function handleRegistrationForm(event) {
     let password = userPasswordNode.value
     let password2 = userPasswordRepeatNode.value
 
-    if (username & password & password2) {
+    if (username && password && password2) {
         let userRegistrationDataForm = {
             'username': username,
             'password': password,
@@ -28,7 +28,7 @@ async function handleRegistrationForm(event) {
 
 
 async function sendRegistrationFormToServer(userRegistrationDataForm) {
-    url = 'http://0.0.0.0:8000/users/signup/'
+    let url = 'http://127.0.0.1:8000/users/signup/'
     try {
         const response = await fetch(url, {
             method: 'POST',
