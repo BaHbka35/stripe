@@ -1,4 +1,4 @@
-from django.shortcuts import render
+import json
 
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -37,4 +37,27 @@ class AddItemToOrderAPI(APIView):
             item=item
         ).save()
         return Response(status=status.HTTP_201_CREATED)
+
+
+class OrderItemsListAPI(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, order_id: int):
+        order: Order = Order.objects.get(id=order_id)
+        if order.user.id != request.user.id:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        list_for_response: list[Item] = []
+        orders_items: list[OrdersItems] = OrdersItems.objects.filter(order_id=order_id)
+        for order_item in orders_items:
+            item = Item.objects.get(id=order_item.item_id)
+            list_for_response.append(item)
+
+        serializer = ItemSerializer(list_for_response, many=True)
+        data = json.loads(json.dumps(serializer.data))
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
+
 
