@@ -1,4 +1,5 @@
 import { setSignatureToLocalStorage, setTokenToLocalStorage } from "./tokens_and_signatures.js";
+import { setUserToLocalStorage } from "./users.js"
 
 
 const loginFormNode = document.querySelector('.login-form')
@@ -17,7 +18,6 @@ async function handleLoginForm(event) {
             'username': username,
             'password': password
         }
-        console.log(userLoginDataForm)
         await sendLoginFormToServer(userLoginDataForm)
     }
     usernameNode.value = ''
@@ -41,12 +41,14 @@ async function sendLoginFormToServer(userLoginDataForm) {
         if (response.status >= 400){
             alert(JSON.stringify(responseJson))
             return
-        }
+        } 
+
+        alert('loged in')
 
         setTokenToLocalStorage(responseJson.token)
         setSignatureToLocalStorage(responseJson.signature)
+        setUserToLocalStorage(responseJson.user)
 
-        console.log(responseJson)
     } catch (error) {
         console.log(error)
     } 
