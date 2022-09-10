@@ -1,3 +1,6 @@
+import { signupAPI } from "./apis.js"
+
+
 const registrationFormNode = document.querySelector('.registration-form')
 const usernameNode = registrationFormNode.querySelector('.registration-form-username')
 const userPasswordNode = registrationFormNode.querySelector('.registration-form-password')
@@ -28,9 +31,8 @@ async function handleRegistrationForm(event) {
 
 
 async function sendRegistrationFormToServer(userRegistrationDataForm) {
-    let url = 'http://127.0.0.1:8000/users/signup/'
     try {
-        const response = await fetch(url, {
+        const response = await fetch(signupAPI, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

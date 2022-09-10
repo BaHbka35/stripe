@@ -1,5 +1,6 @@
 import { setSignatureToLocalStorage, setTokenToLocalStorage } from "./tokens_and_signatures.js";
 import { setUserToLocalStorage } from "./users.js"
+import { loginAPI } from "./apis.js"
 
 
 const loginFormNode = document.querySelector('.login-form')
@@ -26,9 +27,8 @@ async function handleLoginForm(event) {
 
 
 async function sendLoginFormToServer(userLoginDataForm) {
-    let url = 'http://127.0.0.1:8000/users/login/'
     try {
-        const response = await fetch(url, {
+        const response = await fetch(loginAPI, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
