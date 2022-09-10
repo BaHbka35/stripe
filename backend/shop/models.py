@@ -21,11 +21,11 @@ class Order(models.Model):
     user = models.ForeignKey(
         User, models.CASCADE, related_name='orders')
 
-    statuses = [
+    statuses = (
         ('close', 'close'),
         ('open', 'open')
-    ]
-    status = models.CharField(max_length=20, choices=statuses)
+    )
+    status = models.CharField(max_length=20, choices=statuses, default='open')
 
     class Meta:
         db_table = 'orders'
