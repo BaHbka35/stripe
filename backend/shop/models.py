@@ -18,7 +18,7 @@ class Item(models.Model):
 
 class Order(models.Model):
 
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User, models.CASCADE, related_name='orders')
 
     class Meta:
