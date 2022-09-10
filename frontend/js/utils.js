@@ -1,6 +1,5 @@
 import { getUserFromLocalStorage} from "./users.js";
 import { getItems } from "./items.js"
-import { getOrderItems } from "./order.js"
 
 
 let registrationNode = document.querySelector('.header-registration')
@@ -22,9 +21,6 @@ export async function render(){
 
         const items = await getItems()
         await renderItems(items)
-
-        const orderItems = await getOrderItems()
-        await renderOrderItems(orderItems)
 
     } else {
         usernameNode.classList.add('disable')
