@@ -1,5 +1,5 @@
 import {render} from "./utils.js"
-import { getItems } from "./items.js"
+import { getItems, addItemToOrder } from "./items.js"
 
 
 let itemsNode = document.querySelector('.items-list')
@@ -25,10 +25,23 @@ async function render_items(){
             </li>
         `
         itemsNode.innerHTML += listElem
+        
     }
 }
 
 render_items()
+
+itemsNode.addEventListener(
+    'click', (event) => {
+        if (event.target.tagName != 'BUTTON'){
+            return
+        }
+        const item_id = event.target.id
+        addItemToOrder(item_id)
+
+    }
+)
+
 
 
 
