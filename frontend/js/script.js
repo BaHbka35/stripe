@@ -1,23 +1,9 @@
+import { setUserToLocalStorage, getUserFromLocalStorage, deleteUserFromLocalStoragee } from "./users.js";
+
+
 let registrationNode = document.querySelector('.header-registration')
 let loginNode = document.querySelector('.header-login')
 let usernameNode = document.querySelector('.header-username')
-console.log(registrationNode)
-console.log(usernameNode)
-
-
-function getUserFromLocalStorage() {
-    return JSON.parse(localStorage.getItem('user'))
-}
-
-
-function setUserToLocalStorage(user) {
-    localStorage.setItem('user', JSON.stringify(user))
-}
-
-
-function deleteUserFromLocalStoragee() {
-    localStorage.removeItem('user')
-}
 
 
 let user = getUserFromLocalStorage()
