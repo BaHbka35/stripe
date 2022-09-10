@@ -1,5 +1,6 @@
 import { getUserFromLocalStorage} from "./users.js";
 import { getItems } from "./items.js"
+import { getOrderItems } from "./order.js";
 
 
 let registrationNode = document.querySelector('.header-registration')
@@ -8,6 +9,7 @@ let usernameNode = document.querySelector('.header-username')
 let logoutNode = document.querySelector('.header-logout')
 let itemsNode = document.querySelector('.items-list')
 let orderItemsNode = document.querySelector('.order-items')
+let orderHeaderNode = document.querySelector('.order')
 
 
 export async function render(){
@@ -22,11 +24,13 @@ export async function render(){
         const items = await getItems()
         await renderItems(items)
 
+        const orderItemsAmount = await getOrderItems()
+        orderHeaderNode.innerHTML += ` - <span>${orderItemsAmount.length}</span>`
+
     } else {
         usernameNode.classList.add('disable')
         logoutNode.classList.add('disable')
         itemsNode.innerHTML = ''
-        orderItemsNode.innerHTML = ''
         registrationNode.classList.remove('disable')
         loginNode.classList.remove('disable')
     }

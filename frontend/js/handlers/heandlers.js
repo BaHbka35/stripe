@@ -2,6 +2,7 @@ import { addItemToOrder } from "../items.js"
 
 
 let itemsNode = document.querySelector('.items-list')
+let orderHeaderNode = document.querySelector('.order')
 
 
 itemsNode.addEventListener(
@@ -11,6 +12,10 @@ itemsNode.addEventListener(
         }
         const item_id = event.target.id
         addItemToOrder(item_id)
+
+        const spanNode = orderHeaderNode.querySelector("span")
+        spanNode.innerHTML = Number(spanNode.innerHTML) + 1
+
 
     }
 )
