@@ -31,3 +31,16 @@
     display: grid;
     margin-bottom: 10px;
 }
+
+.items-list {
+    margin-top: 100px;
+    display: grid;
+    align-items: left;
+}
+
+.items-list-elem {
+    margin-bottom: 15px;
+}
+
+
+
