@@ -1,7 +1,7 @@
-import { getToken, getSignature } from "./tokens_and_signatures.js";
 import { deleteUserFromLocalStoragee } from "./users.js"
 import { render } from "./utils.js"
 import { logoutAPI } from "./apis.js"
+import { getJsonHeaders, getAuthHeaders } from "./headers_utils.js"
 
 
 let logoutNode = document.querySelector('.header-logout')
@@ -14,18 +14,11 @@ async function handeLogout(event){
 
 
 async function sendLogoutReguest(){
-    const token = getToken()
-    const signature = getSignature() 
-
+    const headers = getAuthHeaders()
     try {
         const response = await fetch(logoutAPI, {
             method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Token': token,
-                'Signature': signature
-            },
+            headers: headers,
         })
         const responseJson = await response.json()
         deleteUserFromLocalStoragee()

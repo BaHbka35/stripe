@@ -1,6 +1,7 @@
 import { setSignatureToLocalStorage, setTokenToLocalStorage } from "./tokens_and_signatures.js";
 import { setUserToLocalStorage } from "./users.js"
 import { loginAPI } from "./apis.js"
+import { getJsonHeaders } from "./headers_utils.js"
 
 
 const loginFormNode = document.querySelector('.login-form')
@@ -27,13 +28,11 @@ async function handleLoginForm(event) {
 
 
 async function sendLoginFormToServer(userLoginDataForm) {
+    const headers = getJsonHeaders()
     try {
         const response = await fetch(loginAPI, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(userLoginDataForm)
         })
         const responseJson = await response.json()
@@ -43,7 +42,7 @@ async function sendLoginFormToServer(userLoginDataForm) {
             return
         } 
 
-        alert('loged in')
+        alert('loged in. Please go one page back')
 
         setTokenToLocalStorage(responseJson.token)
         setSignatureToLocalStorage(responseJson.signature)

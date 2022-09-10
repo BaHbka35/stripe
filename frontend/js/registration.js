@@ -1,4 +1,5 @@
 import { signupAPI } from "./apis.js"
+import { getJsonHeaders } from "./headers_utils.js"
 
 
 const registrationFormNode = document.querySelector('.registration-form')
@@ -31,17 +32,15 @@ async function handleRegistrationForm(event) {
 
 
 async function sendRegistrationFormToServer(userRegistrationDataForm) {
+    const headers = getJsonHeaders()
     try {
         const response = await fetch(signupAPI, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(userRegistrationDataForm)
         })
         const responseJson = await response.json()
-        console.log(responseJson)
+        alert('Registered. Please go one page back')
     } catch (error) {
         console.log(error)
     } 
