@@ -11,13 +11,20 @@
     <header>
     </header>
     <main>
-        <div class="order-items">
+        <div class="order-items-wrapper">
+            <div class="order-items">
+            </div>
+            <div class="buy-order-button-wrapper">
+                <button class="buy-order-button">buy</button>
+            </div>
         </div>
     </main>
     <footer>
 
     </footer>
     
+    <script src="https://js.stripe.com/v3/" type="text/javascript"></script>
     <script type="module" src="js/order_items_render.js"></script>
+    <script type="module" src="js/handlers/buy_order_handler.js"></script>
 </body>
 </html>

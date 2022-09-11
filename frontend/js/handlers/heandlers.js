@@ -15,8 +15,5 @@ itemsNode.addEventListener(
 
         const spanNode = orderHeaderNode.querySelector("span")
         spanNode.innerHTML = Number(spanNode.innerHTML) + 1
-
-
     }
 )
-

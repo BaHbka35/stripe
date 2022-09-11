@@ -13,4 +13,5 @@ export const logoutAPI = users + 'logout/'
 export const getItemsAPI = shop + 'get_items/'
 export const getOrderAPI = shop + 'get_order/'
 export const addItemToOrderAPI = shop + 'add_item_to_order/'
+export const buyOrderAPI = shop + 'buy/'
 
