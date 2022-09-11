@@ -5,7 +5,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-g(8491$opmjlh$pvn%tx0b(=w&#lq6^)9al5yo2ye6!!!%9+)+'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 SECRET_KEY_BYTES = SECRET_KEY.encode()
 
 DEBUG = True
@@ -139,3 +139,6 @@ REST_FRAMEWORK = {
 
 
 STRIPE_KEY = os.getenv('STRIPE_KEY')
+
+SUCCESS_STRIPE_URL = os.getenv('SUCCESS_STRIPE_URL')
+CANCEL_STRIPE_URL = os.getenv('CANCEL_STRIPE_URL')

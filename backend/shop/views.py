@@ -1,5 +1,4 @@
 import json
-from decimal import Decimal
 
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -52,8 +51,6 @@ class OrderAPI(APIView):
     def get(self, request):
         order: Order = Order.objects.get_or_create(
             user_id=request.user.id, status='open')[0]
-        if order.user.id != request.user.id:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         total_price = 0
         list_for_response: list[Item] = []
         orders_items: list[OrdersItems] = OrdersItems.objects.filter(
@@ -78,11 +75,8 @@ class OrderBuyAPI(APIView):
         stripe.api_key = settings.STRIPE_KEY
         order: Order = Order.objects.get(
             user_id=request.user.id, status='open')
-
         order_price: int = (OrdersItems.objects.filter(
             order=order).aggregate(sum=Sum('item__price')))['sum']
-        print(order_price)
-
         stripe_session_id = stripe.checkout.Session.create(
             line_items=[{
                 'price_data': {
@@ -95,8 +89,8 @@ class OrderBuyAPI(APIView):
                 'quantity': 1,
             }],
             mode='payment',
-            cancel_url='http://127.0.0.1:5500/',
-            success_url='http://127.0.0.1:5500/',
+            cancel_url=settings.CANCEL_STRIPE_URL,
+            success_url=settings.SUCCESS_STRIPE_URL,
         )
         return Response(stripe_session_id)
 
