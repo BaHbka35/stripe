@@ -136,3 +136,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ),
 }
+
+
+STRIPE_KEY = os.getenv('STRIPE_KEY')

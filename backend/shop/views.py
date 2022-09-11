@@ -1,10 +1,16 @@
 import json
+from decimal import Decimal
 
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+
+from django.db.models import Sum
+from django.conf import settings
+
+import stripe
 
 from .models import Item, OrdersItems, Order
 
@@ -62,6 +68,39 @@ class OrderAPI(APIView):
         serializer = OrderSerializer(data)
         data = json.loads(json.dumps(serializer.data))
         return Response(data=data, status=status.HTTP_200_OK)
+
+
+class OrderBuyAPI(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        stripe.api_key = settings.STRIPE_KEY
+        order: Order = Order.objects.get(
+            user_id=request.user.id, status='open')
+
+        order_price: int = (OrdersItems.objects.filter(
+            order=order).aggregate(sum=Sum('item__price')))['sum']
+        print(order_price)
+
+        stripe_session_id = stripe.checkout.Session.create(
+            line_items=[{
+                'price_data': {
+                    'currency': 'rub',
+                    'product_data': {
+                        'name': 'Items',
+                    },
+                    'unit_amount': int(str(order_price) + "00"),
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            cancel_url='http://127.0.0.1:5500/',
+            success_url='http://127.0.0.1:5500/',
+        )
+        return Response(stripe_session_id)
+
+
 
 
 

@@ -11,5 +11,7 @@ urlpatterns = [
     path('add_item_to_order/', views.AddItemToOrderAPI.as_view(),
          name='add_item_to_order'),
     path('get_order/', views.OrderAPI.as_view(),
-         name='get_order')
+         name='get_order'),
+    path('buy/', views.OrderBuyAPI.as_view(),
+         name='buy')
 ]
