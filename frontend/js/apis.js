@@ -1,6 +1,6 @@
 
 
-const domen = 'http://127.0.0.1:8000/'
+const domen = 'http://127.0.0.1:8080/'
 
 const users = domen + 'users/'
 const shop = domen + 'shop/'

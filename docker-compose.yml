@@ -13,7 +13,7 @@ services:
     volumes:
       - ./backend/:/usr/src/app
     ports:
-      - 8000:8000
+      - 8080:8000
     env_file:
       - ./backend/.env
     depends_on:
@@ -28,5 +28,6 @@ services:
      - NGINX_PORT=80
     volumes:
       - ./nginx_conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/:/usr/src/frontend/
     depends_on:
       - web
