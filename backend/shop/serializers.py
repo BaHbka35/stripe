@@ -14,5 +14,5 @@ class AddItemToOrderSerializer(serializers.Serializer):
 
 
 class OrderSerializer(serializers.Serializer):
-    total_price = serializers.IntegerField()
+    order_price = serializers.IntegerField()
     items = ItemSerializer(many=True)

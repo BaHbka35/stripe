@@ -1,19 +1,18 @@
 import json
 
+from django.db.models import Sum
+
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from django.db.models import Sum
-from django.conf import settings
-
-import stripe
-
 from .models import Item, OrdersItems, Order
 
 from .serializers import ItemSerializer, AddItemToOrderSerializer, OrderSerializer
+
+from .services import StripeService
 
 
 class ItemsListAPI(generics.ListAPIView):
@@ -51,17 +50,10 @@ class OrderAPI(APIView):
     def get(self, request):
         order: Order = Order.objects.get_or_create(
             user_id=request.user.id, status='open')[0]
-        total_price = 0
-        list_for_response: list[Item] = []
-        orders_items: list[OrdersItems] = OrdersItems.objects.filter(
-            order_id=order.id)
-        for order_item in orders_items:
-            item = Item.objects.get(id=order_item.item_id)
-            list_for_response.append(item)
-            total_price += item.price
-
-        data = {'total_price': total_price, 'items': list_for_response}
-
+        items: list[Item] = Item.objects.filter(orders_items__order=order)
+        order_price: int = (OrdersItems.objects.filter(
+            order=order).aggregate(sum=Sum('item__price')))['sum']
+        data = {'order_price': order_price, 'items': items}
         serializer = OrderSerializer(data)
         data = json.loads(json.dumps(serializer.data))
         return Response(data=data, status=status.HTTP_200_OK)
@@ -72,27 +64,12 @@ class OrderBuyAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        stripe.api_key = settings.STRIPE_KEY
         order: Order = Order.objects.get(
             user_id=request.user.id, status='open')
         order_price: int = (OrdersItems.objects.filter(
             order=order).aggregate(sum=Sum('item__price')))['sum']
-        stripe_session_id = stripe.checkout.Session.create(
-            line_items=[{
-                'price_data': {
-                    'currency': 'rub',
-                    'product_data': {
-                        'name': 'Items',
-                    },
-                    'unit_amount': int(str(order_price) + "00"),
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            cancel_url=settings.CANCEL_STRIPE_URL,
-            success_url=settings.SUCCESS_STRIPE_URL,
-        )
-        return Response(stripe_session_id)
+        stripe_session = StripeService.get_stripe_session(order_price)
+        return Response(stripe_session)
 
 
 
