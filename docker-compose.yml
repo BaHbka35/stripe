@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 
 services:
   db:
@@ -22,7 +22,7 @@ services:
     image: nginx
     container_name: nginx
     ports:
-     - "80:80"
+     - "1180:80"
     environment:
      - NGINX_HOST=localhost
      - NGINX_PORT=80
